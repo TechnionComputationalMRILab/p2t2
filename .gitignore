@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+*.out
+*.npz
+*.pkl
+*.pt
+runs/*
+brain_data_7.9ms_miml/*

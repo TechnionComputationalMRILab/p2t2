@@ -1,0 +1,75 @@
+components: ['Myelin', 'IS', 'ES', 'GM', 'Pathology', 'CSF']
+Myelin:
+  t2_mean: [15,30]  # ms
+  t2_std: [0.1, 5]  # ms
+IS:
+  t2_mean: [50,120]  # ms
+  t2_std: [0.1, 12]  # ms
+ES:
+  t2_mean: [50,120]  # ms
+  t2_std: [0.1, 12]  # ms
+GM:
+  t2_mean: [60,300]  # ms
+  t2_std: [0.1, 12]  # ms
+Pathology:
+  t2_mean: [300,1000]  # ms
+  t2_std: [0.1, 5]     # ms
+CSF:
+  t2_mean: [1000,2000]  # ms
+  t2_std:  [0.1, 5]     # ms
+
+water_pool:
+  WM:
+    components: ['Myelin', 'IS', 'ES']
+    derichlet_alpha: [1., 1., 1.]
+  GM:
+    components: ['Myelin', 'GM']
+    derichlet_alpha: [1., 1.]
+  CSF:
+    components: ['CSF']
+    derichlet_alpha: [1]
+  WM_CSF:
+    components: ['Myelin', 'IS', 'ES', 'CSF']
+    derichlet_alpha: [1., 1., 1., 1.]
+  WM_GM:
+    components: [ 'Myelin', 'IS', 'ES', 'GM' ]
+    derichlet_alpha: [ 1., 1., 1., 1. ]
+  CSF_GM:
+    components: ['Myelin', 'GM', 'CSF']
+    derichlet_alpha: [1., 1., 1.]
+  Pathology:
+    components: [ 'Pathology' ]
+    derichlet_alpha: [ 1 ]
+
+seed: 42
+low_SNR: 10
+high_SNR: 80
+T1value: 1000
+T2_linear:
+  range: [1., 2000.]
+  delta: 0.1
+  num_elm: 2000
+T2_log:
+  num_samples: 60
+  start: 10.0
+  end: 2000.0
+num_signals: 200000 
+max_signal_size: 100000
+num_epgs_signals: 10000
+n_echoes: 20
+
+# model params:
+channel_size: 256
+num_channels: 6  
+# train params
+Trainer:
+  val_frac: 0.2
+  test_frac: 0.1
+  batch_size: 2000
+  val_batch: 2000
+  num_workers: 4
+  num_epochs: 1000
+  lr: 1.e-4
+  val_step: 1
+  mse_weight: 100000.0
+
