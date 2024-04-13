@@ -133,3 +133,4 @@ dmypy.json
 *.pt
 runs/*
 brain_data_7.9ms_miml/*
+DeployModels/*
