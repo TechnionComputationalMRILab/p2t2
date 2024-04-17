@@ -8,8 +8,6 @@ from box import Box
 import yaml
 from ruamel.yaml import RoundTripDumper
 import random
-from torch.utils.tensorboard import SummaryWriter
-import logging
 from datetime import datetime
 
 from pt2_reconstruction_model_utils import T2_Dataset
@@ -132,7 +130,7 @@ def main(args, model_type, min_te, max_te):
     data_args.device = device
     data_args.model_type = model_type
     
-    data_args.to_yaml(os.path.join(data_args.training_path, os.path.basename(args.config)), Dumper=RoundTripDumper)
+    data_args.to_yaml(os.path.join(data_args.training_path, os.path.basename(args.config)))
 
     # simulate & upload the data
     if not os.path.exists(args.data_folder):
@@ -161,14 +159,14 @@ if __name__ == '__main__':
     parser.add_argument('--config', default='config.yaml', type=str)
     args = parser.parse_args()
 
-    args.data_folder = os.path.normpath('brain_data_7.9ms_miml')
+    args.data_folder = os.path.normpath('brain_data_5_15ms_p2t2')
     # args.data_folder = os.path.normpath('/tcmldrive/hds/T2_simulation/EPGs/EPGs_12_nTE_20_nEPGS_10000/signals_SNR_10_80')
-    args.runs_outputs_path = os.path.normpath('runs/brain_data_7.9ms')
+    args.runs_outputs_path = os.path.normpath('runs/brain_data_5_15ms_p2t2')
     os.makedirs(args.runs_outputs_path, exist_ok=True) 
 
     now = datetime.now()
     args.dt_string = now.strftime("%y%m%d_%H_%M_%S")
-    model_type = 'MIML'
+    model_type = 'P2T2-FC'
     min_te=7.9 
     max_te=None
 

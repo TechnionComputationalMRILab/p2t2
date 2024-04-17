@@ -1,0 +1,140 @@
+CSF:
+  t2_mean:
+  - 1000
+  - 2000
+  t2_std:
+  - 0.1
+  - 5
+ES:
+  t2_mean:
+  - 50
+  - 120
+  t2_std:
+  - 0.1
+  - 12
+GM:
+  t2_mean:
+  - 60
+  - 300
+  t2_std:
+  - 0.1
+  - 12
+IS:
+  t2_mean:
+  - 50
+  - 120
+  t2_std:
+  - 0.1
+  - 12
+Myelin:
+  t2_mean:
+  - 15
+  - 30
+  t2_std:
+  - 0.1
+  - 5
+Pathology:
+  t2_mean:
+  - 300
+  - 1000
+  t2_std:
+  - 0.1
+  - 5
+T1value: 1000
+T2_linear:
+  delta: 0.1
+  num_elm: 2000
+  range:
+  - 1.0
+  - 2000.0
+T2_log:
+  end: 2000.0
+  num_samples: 60
+  start: 10.0
+Trainer:
+  batch_size: 2000
+  lr: 0.0001
+  mse_weight: 100000.0
+  num_epochs: 1000
+  num_workers: 4
+  test_frac: 0.1
+  val_batch: 2000
+  val_frac: 0.2
+  val_step: 1
+channel_size: 256
+components:
+- Myelin
+- IS
+- ES
+- GM
+- Pathology
+- CSF
+high_SNR: 80
+low_SNR: 10
+max_signal_size: 100000
+max_te: 15.0
+min_te: 5.0
+model_type: P2T2
+n_echoes: 20
+num_channels: 6
+num_epgs_signals: 10000
+num_signals: 200000
+seed: 42
+water_pool:
+  CSF:
+    components:
+    - CSF
+    derichlet_alpha:
+    - 1
+  CSF_GM:
+    components:
+    - Myelin
+    - GM
+    - CSF
+    derichlet_alpha:
+    - 1.0
+    - 1.0
+    - 1.0
+  GM:
+    components:
+    - Myelin
+    - GM
+    derichlet_alpha:
+    - 1.0
+    - 1.0
+  Pathology:
+    components:
+    - Pathology
+    derichlet_alpha:
+    - 1
+  WM:
+    components:
+    - Myelin
+    - IS
+    - ES
+    derichlet_alpha:
+    - 1.0
+    - 1.0
+    - 1.0
+  WM_CSF:
+    components:
+    - Myelin
+    - IS
+    - ES
+    - CSF
+    derichlet_alpha:
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0
+  WM_GM:
+    components:
+    - Myelin
+    - IS
+    - ES
+    - GM
+    derichlet_alpha:
+    - 1.0
+    - 1.0
+    - 1.0
+    - 1.0

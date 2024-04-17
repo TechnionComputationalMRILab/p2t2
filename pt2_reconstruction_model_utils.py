@@ -24,7 +24,8 @@ class wasserstein_distance(nn.Module):
         arr_tensor = torch.FloatTensor(arr.astype('float32'))
 
         abs_cdf_difference = torch.abs(torch.cumsum(y_actual - y_pred, dim=1))  # tf.math.abs(tf.math.cumsum(y_actual -
-        arr_tensor = arr_tensor.to(y_pred.get_device())
+        # arr_tensor = arr_tensor.to(y_pred.get_device())
+        arr_tensor = arr_tensor.to(y_pred.device)
         wass_loss = torch.mean(
             0.5 * torch.sum(
                 torch.multiply(

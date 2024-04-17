@@ -420,14 +420,15 @@ def main(config_path, min_te, max_te, n_echoes, out_folder, model_type='P2T2', n
 
 
 if __name__ == '__main__':
-    config_path = 'mice_data_confige.yaml'
-    min_te = 11.0
-    n_echoes = 10
-    out_folder = 'mice_data_11_0ms_miml'
+    # config_path = 'mice_data_confige.yaml'
+    # min_te = 11.0
+    # n_echoes = 10
+    # out_folder = 'mice_data_11_0ms_miml'
     # main(config_path, min_te, None, n_echoes, out_folder, model_type='MIML')
 
     # simulate multi te data
-    config_path = 'brain_data_config.yaml'
+    # config_path = 'brain_data_config.yaml'
+    config_path = 'config.yaml'
     min_te = 5.0
     max_te = 15.0
     n_echoes = 20

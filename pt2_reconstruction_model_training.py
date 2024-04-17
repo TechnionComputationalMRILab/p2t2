@@ -67,11 +67,13 @@ class PT2Net_Trainer():
         else:
             inputs = data["s_norm"].to(self.device)
 
-        inputs = inputs.type(torch.cuda.FloatTensor)
+        # inputs = inputs.type(torch.cuda.FloatTensor)
+        inputs = inputs.type(torch.FloatTensor)
         inputs = inputs.squeeze().to(self.device)
 
         pT2 = data["p_T2"].squeeze().to(self.device)
-        pT2 = pT2.type(torch.cuda.FloatTensor)
+        # pT2 = pT2.type(torch.cuda.FloatTensor)
+        pT2 = pT2.type(torch.FloatTensor)
         pT2 = pT2.to(self.device)
 
         return inputs, pT2
