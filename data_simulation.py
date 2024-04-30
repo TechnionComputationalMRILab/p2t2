@@ -428,10 +428,46 @@ if __name__ == '__main__':
 
     # simulate multi te data
     # config_path = 'brain_data_config.yaml'
-    config_path = 'config.yaml'
-    min_te = 5.0
-    max_te = 15.0
-    n_echoes = 20
-    num_signals = 10000
-    out_folder = 'brain_data_5_15ms_p2t2'
-    main(config_path, min_te, max_te, n_echoes, out_folder, model_type='P2T2', num_signals=num_signals)
+
+
+    # config_path = 'config.yaml'
+    # min_te = 5.0
+    # max_te = 15.0
+    # n_echoes = 20
+    # num_signals = 10000
+    # out_folder = 'brain_data_5_15ms_p2t2'
+    # main(config_path, min_te, max_te, n_echoes, out_folder, model_type='P2T2', num_signals=num_signals)
+
+    parser = argparse.ArgumentParser(description='Data Simulation')
+    parser.add_argument('--config', type=str, help='path to the config file', default='config.yaml')
+    parser.add_argument('--min_te', type=float, help='minimum echo time', default=5.0)
+    parser.add_argument('--max_te', type=float, help='maximum echo time (ignored for MIML)', default=15.0)
+    parser.add_argument('--n_echoes', type=int, help='number of echoes (ignored for P2T2)', default=20)
+    parser.add_argument('--model_type', type=str, help='model type', default='P2T2')
+    parser.add_argument('--num_signals', type=int, help='number of signals', default=10000)
+    parser.add_argument('--out_folder', type=str, help='output folder', default='data')
+
+    args = parser.parse_args()
+
+    print("config: ", args.config)
+    print("model_type: ", args.model_type)
+    print("min_te: ", args.min_te)
+
+    if args.model_type == 'MIML':
+        print("max_te: ", args.max_te)
+
+    if args.model_type == 'P2T2':
+        print("n_echoes: ", args.n_echoes)
+
+    print("num_signals: ", args.num_signals)
+    print("out_folder: ", args.out_folder)
+
+    main(
+        config_path=args.config,
+        min_te=args.min_te,
+        max_te=args.max_te,
+        n_echoes=args.n_echoes,
+        out_folder=args.out_folder,
+        model_type=args.model_type,
+        num_signals=args.num_signals
+    )
