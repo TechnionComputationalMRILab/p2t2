@@ -41,25 +41,24 @@ def train(
     min_te: float = 7.9,
     max_te: Optional[float] = None
 ):
-    import argparse
+    from argparse import Namespace
     from pathlib import Path
     from datetime import datetime
     from pt2_reconstruction_model_main import main
 
-    parser = argparse.ArgumentParser()
-    args = parser.parse_args()
+    args = {}
 
-    args.config = config
-    args.data_folder = data_folder
+    args["config"] = config
+    args["data_folder"] = data_folder
 
     Path(output_path).mkdir(parents=True, exist_ok=True)
-    args.runs_outputs_path = output_path
+    args["runs_outputs_path"] = output_path
 
     now = datetime.now()
-    args.dt_string = now.strftime("%y%m%d_%H_%M_%S")
+    args["dt_string"] = now.strftime("%y%m%d_%H_%M_%S")
 
     main(
-        args, 
+        Namespace(**args), 
         model_type, 
         min_te, 
         max_te
@@ -124,3 +123,25 @@ def infer(
         predicted_fa_array, 
         os.path.join(output_dir, 'predicted_fa.nii.gz')
     )
+
+
+if __name__ == "__main__":
+    import argparse
+    import sys
+
+    parser = argparse.ArgumentParser(description='Reconstruct T2 distribution from mri signal for brain data')
+    parser.add_argument('--task', type=str)
+    args = parser.parse_args()
+
+    if args.task == "simulate":
+        
+
+
+        simulate()
+    elif args.task == "train":
+        train()
+    elif args.task == "infer":
+        infer()
+    else:
+        print("Please specify script task. Exiting...")
+        sys.exit(0)

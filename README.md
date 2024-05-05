@@ -13,7 +13,7 @@ This project focuses on the robust estimation of T2 distributions from quantitat
 ### Prerequisites
 
 Before running the simulations and the model, ensure you have the following installed:
-- Python 3.8 or later
+- Python 3.10
 - NumPy
 - PyTorch
 - Any other dependencies listed in `requirements.txt`
