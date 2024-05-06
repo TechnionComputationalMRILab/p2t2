@@ -23,23 +23,77 @@ Install the required packages using:
 pip install -r requirements.txt
 ```
 
+
+
 ### Data Simulation
 
-Use the script `data_simulation.py` to simulate MRI data. You can specify the type of model (`MIML` or `P2T2`) to determine the simulation parameters.
+```
+usage: p2t2_simulate [-h] [--config_file CONFIG_FILE] [--out_folder OUT_FOLDER] [--model_type {P2T2,MIML}] [--min_te MIN_TE] [--max_te MAX_TE] [--n_echoes N_ECHOES] [--num_signals NUM_SIGNALS]
 
-#### Usage
-```bash
-python data_simulation.py --model_type <MODEL_TYPE> --min_TE <MIN_TE> --max_TE <MAX_TE> --n_echoes <N_ECHOES>
+Reconstruct T2 distribution from mri signal for brain data
+
+options:
+  -h, --help            show this help message and exit
+  --config_file CONFIG_FILE, -c CONFIG_FILE
+                        Path to config file
+  --out_folder OUT_FOLDER, -o OUT_FOLDER
+                        Path to output folder
+  --model_type {P2T2,MIML}
+                        Model type. 'MIML' for single TE sequence or 'P2T2' for varied TE sequences. Default is P2T2
+  --min_te MIN_TE       Minimum echo time. Default is 5.0
+  --max_te MAX_TE       Maximum echo time (only for P2T2 type). Default is 15.0
+  --n_echoes N_ECHOES   Number of echoes (only for MIML type). Default is 20
+  --num_signals NUM_SIGNALS
+                        Number of signals (only for MIML type). Default is 10000
 ```
 
-- `MODEL_TYPE`: Type of the model ('MIML' for single TE sequence or 'P2T2' for varied TE sequences).
-- `MIN_TE`: Minimum echo time in milliseconds.
-- `MAX_TE`: Maximum echo time in milliseconds (only for 'P2T2' type).
-- `N_ECHOES`: Number of echo times (applies to 'MIML').
+A sample config.yaml file is provided
 
 ### Model Training
 
 To train the model, configure the settings in `config.yaml` and run `pt2_reconstruction_model_main.py`.
+
+```
+usage: p2t2_train [-h] --config_file CONFIG_FILE --data_folder DATA_FOLDER --output_path OUTPUT_PATH [--model_type {P2T2,MIML}] [--min_te MIN_TE] [--max_te MAX_TE]
+
+Reconstruct T2 distribution from mri signal for brain data
+
+options:
+  -h, --help            show this help message and exit
+  --config_file CONFIG_FILE, -c CONFIG_FILE
+                        Path to config file
+  --data_folder DATA_FOLDER, -d DATA_FOLDER
+                        Path to data folder
+  --output_path OUTPUT_PATH, -o OUTPUT_PATH
+                        Path to output folder
+  --model_type {P2T2,MIML}
+                        Model type. 'MIML' for single TE sequence or 'P2T2' for varied TE sequences. Default is P2T2
+  --min_te MIN_TE       Minimum echo time. Default is 7.9
+  --max_te MAX_TE       Maximum echo time. Optional
+```
+
+### Model Inference
+```
+usage: p2t2_infer [-h] --model_path MODEL_PATH --model_args_path MODEL_ARGS_PATH --output_dir OUTPUT_DIR --mri MRI --metadata METADATA [--model_type {P2T2,MIML}] [--n_echoes N_ECHOES]
+
+Reconstruct T2 distribution from mri signal for brain data
+
+options:
+  -h, --help            show this help message and exit
+  --model_path MODEL_PATH, -m MODEL_PATH
+                        Path to model
+  --model_args_path MODEL_ARGS_PATH, -a MODEL_ARGS_PATH
+                        Path to model args
+  --output_dir OUTPUT_DIR, -o OUTPUT_DIR
+                        Output directory
+  --mri MRI
+  --metadata METADATA
+  --model_type {P2T2,MIML}
+                        Model type. 'MIML' for single TE sequence or 'P2T2' for varied TE sequences. Default is P2T2
+  --n_echoes N_ECHOES   Number of echoes
+```
+
+
 
 #### Configuration
 

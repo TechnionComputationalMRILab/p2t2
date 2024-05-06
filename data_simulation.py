@@ -6,6 +6,7 @@ import argparse
 import yaml
 from box import Box
 from scipy.stats import norm
+from tqdm import tqdm
 
 """
 Based on the data simulation presented in MIML: 
@@ -335,21 +336,21 @@ class SimualteData:
         Vf, Vmu, Vsigma = self.get_water_pool_params(self.args, water_pool_name=water_pool_name)
 
         np.savez(os.path.join(wp_out_folder, f'{water_pool_name}_Vf.npz'), Vf)
-        print('save Vf')
+        # print('save Vf')
         np.savez(os.path.join(wp_out_folder, f'{water_pool_name}_Vmu.npz'), Vmu)
-        print('save V mu')
+        # print('save V mu')
         np.savez(os.path.join(wp_out_folder, f'{water_pool_name}_Vsigma.npz'), Vsigma)
-        print('save V sigma')
+        # print('save V sigma')
         np.savez(os.path.join(wp_out_folder, f'{water_pool_name}_vKm.npz'), vKm)
-        print('save V km')
+        # print('save V km')
         np.savez(os.path.join(wp_out_folder, f'{water_pool_name}_vSNR.npz'), vSNR)
-        print('save V SNR')
+        # print('save V SNR')
 
         # --- get T2 distribution
         data = []
         Data = np.zeros((self.args.num_signals, self.n_echoes))
         Distributions = np.zeros((self.args.num_signals, self.Npc))
-        print('Fitting...please wait')
+        # print('Fitting...please wait')
         for iter in range(0, self.args.num_signals):
             # # --- get p(T2) dist
             dist, v, mean, std = self.get_dist(water_pool_args, self.args, self.T2grid, Vf, Vmu, Vsigma, iter)
@@ -387,13 +388,15 @@ class SimualteData:
         data_file = open(os.path.join(wp_out_folder, out_name), "wb")
         pickle.dump(data, data_file)
         data_file.close()
-        print('done')
+        # print('done')
         return
 
     def simulate_data(self, ):
         water_pool_names = self.args.water_pool.keys()
-        for water_pool_name in water_pool_names:
-            print(water_pool_name)
+        pbar = tqdm(water_pool_names)
+        for water_pool_name in pbar:
+            pbar.set_description(f"Processing {water_pool_name}")
+            # print(water_pool_name)
             self.simulate_wp_data(water_pool_name)
 
 

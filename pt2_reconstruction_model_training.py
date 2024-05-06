@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import torch
+from tqdm import trange
 from torch.utils.data import Dataset, DataLoader
 import random
 from torch.utils.tensorboard import SummaryWriter
@@ -112,7 +113,7 @@ class PT2Net_Trainer():
 
         epoch_loss /= step
         self.writer.add_scalar(tag='Loss/train', scalar_value=epoch_loss, global_step=epoch + 1)
-        print(f"epoch {epoch + 1} average loss: {epoch_loss:.4f}")
+        # print(f"epoch {epoch + 1} average loss: {epoch_loss:.4f}")
         if self.logger is not None:
             self.logger.info(f"epoch {epoch + 1} average loss: {epoch_loss:.4f}")
 
@@ -133,18 +134,18 @@ class PT2Net_Trainer():
         for key in val_epoch_loss.keys():
             val_epoch_loss[key] /= step
             self.writer.add_scalar(tag=f'Val_Loss/{key}', scalar_value=val_epoch_loss[key], global_step=epoch + 1)
-        print([f"{key} val loss = {val_epoch_loss[key]}" for key in val_epoch_loss.keys()])
+        # print([f"{key} val loss = {val_epoch_loss[key]}" for key in val_epoch_loss.keys()])
 
         
         if val_loss < self.best_val_loss:
             # save new model
             torch.save(self.model.state_dict(), os.path.join(self.args.training_path, 'best_model.pt'))
             self.best_val_loss = val_loss
-            print("save new best model")
+            # print("save new best model")
             self.best_epoch = epoch
         
-        print(f"epoch {epoch + 1}, val loss: {val_loss:.4f}")
-        print(f"best val loss: {self.best_val_loss:.6f} at epoch {self.best_epoch + 1}")
+        # print(f"epoch {epoch + 1}, val loss: {val_loss:.4f}")
+        # print(f"best val loss: {self.best_val_loss:.6f} at epoch {self.best_epoch + 1}")
         
         if self.logger is not None:
             self.logger.info(f"epoch {epoch + 1}, val loss: {val_loss:.4f}")
@@ -187,9 +188,9 @@ class PT2Net_Trainer():
             self.best_val_loss = checkpoints['best_val_loss']
             last_epoch = checkpoints['last epoch']
         
-        for epoch in range(last_epoch, num_epochs):
-            print("-" * 10)
-            print(f"epoch {epoch + 1}/{num_epochs}")
+        for epoch in trange(last_epoch, num_epochs):
+            # print("-" * 10)
+            # print(f"epoch {epoch + 1}/{num_epochs}")
 
             # perform training loop -
             self.train_loop(train_dl, epoch)
