@@ -21,6 +21,8 @@ def simulate(
         out_folder (str, optional): Destination folder for the simulated data. Defaults to 'data'.
     """
     from data_simulation import main
+
+    print(f"Simulating data to: {out_folder}")
     
     main(
         config_path=config_file,
@@ -45,6 +47,8 @@ def train(
     from pathlib import Path
     from datetime import datetime
     from pt2_reconstruction_model_main import main
+
+    print("Running training...")
 
     args = {}
 
@@ -124,24 +128,3 @@ def infer(
         os.path.join(output_dir, 'predicted_fa.nii.gz')
     )
 
-
-if __name__ == "__main__":
-    import argparse
-    import sys
-
-    parser = argparse.ArgumentParser(description='Reconstruct T2 distribution from mri signal for brain data')
-    parser.add_argument('--task', type=str)
-    args = parser.parse_args()
-
-    if args.task == "simulate":
-        
-
-
-        simulate()
-    elif args.task == "train":
-        train()
-    elif args.task == "infer":
-        infer()
-    else:
-        print("Please specify script task. Exiting...")
-        sys.exit(0)
