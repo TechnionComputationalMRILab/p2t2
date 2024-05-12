@@ -3,12 +3,17 @@ from setuptools import setup, find_packages
 with open('requirements.txt') as f:
     required = f.read().splitlines()
 
+with open('README.md') as f:
+    long_description = f.read()
+
 
 setup(
     name="p2t2",
-    version="0.1.0",
+    version="0.1.1",
     packages=find_packages(),
     install_requires=required,
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     entry_points={
         'console_scripts': [
             'p2t2_train = p2t2_train:main',
