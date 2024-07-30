@@ -20,7 +20,6 @@ seaborn==0.11.2
 SimpleITK==2.1.1.2
 tensorboard==2.8.0
 tensorflow==2.8.0
-torch==2.0.0
 torch-tb-profiler==0.3.1
 torchaudio==2.0.1
 torchvision==0.15.1
